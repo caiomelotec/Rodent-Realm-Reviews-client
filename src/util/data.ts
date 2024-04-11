@@ -1,3 +1,11 @@
+import {
+  FaApple,
+  FaComputer,
+  FaLinux,
+  FaPlaystation,
+  FaXbox,
+} from "react-icons/fa6";
+
 export const categories = [
   { id: 4, name: "Action" },
   { id: 51, name: "Indie" },
@@ -18,4 +26,16 @@ export const categories = [
   { id: 28, name: "Board Games" },
   { id: 34, name: "Educational" },
   { id: 17, name: "Card" },
+];
+
+export const platforms = [
+  { name: "PC", icon: FaComputer },
+  { name: "PlayStation 5", icon: FaPlaystation },
+  { name: "Xbox Series S/X", icon: FaXbox },
+  { name: "PlayStation 4", icon: FaPlaystation },
+  { name: "PlayStation 3", icon: FaPlaystation },
+  { name: "Xbox 360", icon: FaXbox },
+  { name: "Xbox One", icon: FaXbox },
+  { name: "Linux", icon: FaLinux },
+  { name: "MacOs", icon: FaApple },
 ];
