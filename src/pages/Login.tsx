@@ -5,7 +5,25 @@ import { BiArrowToRight } from "react-icons/bi";
 import { RiAccountCircleLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginFormSchema } from "../util/schema";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as z from "zod";
+
+type LoginFormInput = z.infer<typeof LoginFormSchema>;
+
 export const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginFormInput>({ resolver: zodResolver(LoginFormSchema) });
+
+  const processForm: SubmitHandler<LoginFormInput> = (data) => {
+    console.log(data);
+  };
+
   return (
     <>
       <div className="min-h-[93vh] flex flex-col items-center justify-center bg-gray-300 h-11/12 dark:bg-slate-800">
@@ -25,7 +43,7 @@ export const Login = () => {
             </div>
           </div>
           <div className="mt-10">
-            <form action="#">
+            <form onSubmit={handleSubmit(processForm)}>
               <div className="flex flex-col mb-6">
                 <label
                   htmlFor="email"
@@ -34,15 +52,25 @@ export const Login = () => {
                   E-Mail Address:
                 </label>
                 <div className="relative">
-                  <div className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                  <div
+                    className={`inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 ${
+                      errors.email ? "text-red-500" : "text-gray-400"
+                    }`}
+                  >
                     <MdAlternateEmail size={20} />
                   </div>
                   <input
                     id="email"
                     type="email"
-                    name="email"
-                    className="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
-                    placeholder="E-Mail Address"
+                    {...register("email")}
+                    className={`text-sm sm:text-base ${
+                      errors.email
+                        ? "placeholder-red-600 border-red-400"
+                        : "placeholder-gray-500 border-gray-400"
+                    } pl-10 pr-4 rounded-lg border  w-full py-2 focus:outline-none focus:border-blue-400`}
+                    placeholder={`${
+                      errors.email ? errors.email.message : "E-Mail Address"
+                    }`}
                   />
                 </div>
               </div>
@@ -54,7 +82,11 @@ export const Login = () => {
                   Password:
                 </label>
                 <div className="relative">
-                  <div className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
+                  <div
+                    className={`inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 ${
+                      errors.email ? "text-red-500" : "text-gray-400"
+                    }`}
+                  >
                     <span>
                       <MdOutlinePassword size={20} />
                     </span>
@@ -62,9 +94,16 @@ export const Login = () => {
                   <input
                     id="password"
                     type="password"
-                    name="password"
-                    className="text-sm sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
-                    placeholder="Password"
+                    {...register("password")}
+                    className={`text-sm sm:text-base ${
+                      errors.password
+                        ? "placeholder-red-600 border-red-400"
+                        : "placeholder-gray-500 border-gray-400"
+                    } pl-10 pr-4 rounded-lg border  w-full py-2 focus:outline-none focus:border-blue-400`}
+                    placeholder={`${
+                      errors.password ? errors.password.message : "Password"
+                    }`}
+                    autoComplete="off"
                   />
                 </div>
               </div>
